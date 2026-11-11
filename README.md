@@ -99,3 +99,4 @@ O arquivo [`src/database/schema.sql`](src/database/schema.sql) é aplicado autom
 1. **`licitacoes`**: Metadados oficiais do PNCP, chave única composta `(cnpj_orgao, ano, sequencial)`, valores estimados, datas e link do edital.
 2. **`licitacao_analises`**: Resultado completo da análise da IA (`score_oportunidade` de 1 a 10, `categoria`, `status_prospeccao`, `pasta_local`, `resumo_executivo`, `itens_principais`, `exigencias_tecnicas`, `prazos_criticos` e `riscos_identificados` em `JSONB`).
 3. **`licitacoes_descartadas`**: Histórico dedicado aos editais da saúde que foram analisados pela IA mas reprovados (`Score < SCORE_MINIMO_DOWNLOAD`), armazenando o `motivo_descarte` e os `riscos_principais`.
+
