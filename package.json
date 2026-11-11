@@ -1,0 +1,45 @@
+{
+  "name": "projeto-licitacoes",
+  "version": "2.0.0",
+  "description": "Agente autônomo de monitoramento e análise inteligente de licitações da saúde no PNCP via Groq e PostgreSQL",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "dev": "tsx watch src/index.ts",
+    "consultar": "tsx -e \"import { pool } from './src/config/database'; pool.query('SELECT l.id, l.municipio, l.uf, l.orgao_nome, a.categoria, a.status_prospeccao, a.pasta_local, l.valor_total_estimado, a.score_oportunidade, a.resumo_executivo FROM licitacoes l JOIN licitacao_analises a ON a.licitacao_id = l.id ORDER BY a.score_oportunidade DESC, l.id DESC').then(r => { console.log(JSON.stringify(r.rows, null, 2)); return pool.end(); });\"",
+    "descartadas": "tsx -e \"import { pool } from './src/config/database'; pool.query('SELECT id, municipio, uf, orgao_nome, ano, sequencial, categoria, score_oportunidade, motivo_descarte, data_prospeccao FROM licitacoes_descartadas ORDER BY id DESC').then(r => { console.table(r.rows); return pool.end(); });\"",
+    "relatorio": "tsx -e \"import { ensureSchema, pool } from './src/config/database'; import { LicitacaoService } from './src/services/licitacao.service'; (async () => { await ensureSchema(); const s = new LicitacaoService(); const r = await s.gerarRelatorioDiarioProspeccao(); console.log('Relatório diário atualizado:', r); await pool.end(); })();\"",
+    "build": "tsc",
+    "start:prod": "node dist/index.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "pncp",
+    "licitacoes",
+    "saude",
+    "groq",
+    "llm",
+    "postgresql",
+    "typescript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.17.0",
+    "dotenv": "^17.4.2",
+    "groq-sdk": "^1.2.1",
+    "node-cron": "^4.6.0",
+    "node-fetch": "^3.3.2",
+    "pdf-parse": "^1.1.1",
+    "pg": "^8.21.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.2",
+    "@types/node-cron": "^3.0.11",
+    "@types/pdf-parse": "^1.1.5",
+    "@types/pg": "^8.23.1",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.23.15",
+    "typescript": "^6.0.3"
+  }
+}

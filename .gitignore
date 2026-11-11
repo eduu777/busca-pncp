@@ -1,0 +1,24 @@
+# Dependências
+node_modules/
+
+# Build TypeScript
+dist/
+
+# Variáveis de ambiente e segredos (NUNCA subir chaves reais)
+.env
+.env.*
+!.env.example
+
+# Editais e relatórios gerados localmente nas execuções
+src/editais/
+
+# Logs e arquivos temporários
+logs/
+*.log
+npm-debug.log*
+
+# Sistema Operacional e IDEs
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
